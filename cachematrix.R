@@ -58,14 +58,20 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(fdefs,...){
        
   ## Returns a matrix that is the inverse of 'x' in the above
+  ## uses the functions "get", "setmatrix"and "getmatrix" defined above 
+  ## and pased to "cacheSolve" in the list output by "makeCacheMatrix"
   
-    matinv<-fdefs$getmatrix()
-    if(!is.null(matinv)){
-      message("getting cached data")
-      return(matinv)
+    matinv<-fdefs$getmatrix()        # retrieves the inverse of matrix from cache
+                                     # using "getmatrix"
+    
+    if(!is.null(matinv)){            # tests if inverse exists(is not NULL)
+      message("getting cached data") 
+      return(matinv)                 # returns cached inverse if it exists
     }
-    matrix<-fdefs$get()
-    matinv<-solve(matrix, ...)
-    fdefs$setmatrix(matinv)
-    matinv
+                                     # Otherwise i.e when no inverse is cached
+    
+    matrix<-fdefs$get()              # retreives the matrix (using "get")
+    matinv<-solve(matrix, ...)       # inverts the matrix 
+    fdefs$setmatrix(matinv)          # caches the inverse (using "setmatrix")
+    matinv                   
   }
